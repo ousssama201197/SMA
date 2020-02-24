@@ -1,27 +1,34 @@
 package sma;
 
+import jade.core.AID;
 import jade.core.Agent;
+import jade.gui.GuiAgent;
+import jade.gui.GuiEvent;
+import jade.lang.acl.ACLMessage;
 
-public class agent extends Agent{
+public class agent extends GuiAgent {
+    // connexion bidirectionnel entre l'interface graphique et l'agent=
 
-	@Override
-	protected void afterMove() {
-		// TODO Auto-generated method stub
-		super.afterMove();
-	}
+    private Container gui;
 
-	@Override
-	protected void setup() {
-		// TODO Auto-generated method stub
-		super.setup();
-	}
+    @Override
+    protected void setup() {
+        // Communication bidirectionnel entre Agent,InterfaceG
+        gui = (Container) getArguments()[0];
+        // envoyer l'instance du l'agent vers l'interface graphique
+        gui.setAgent(this);
+        
+    }
 
-	@Override
-	protected void takeDown() {
-		// TODO Auto-generated method stub
-		super.takeDown();
-	}
-	
-	
+    @Override
+    public void onGuiEvent(GuiEvent event) {
+    if(event.getType() == 1){
+       String message = (String) event.getParameter(0);
+       ACLMessage aclmessage = new ACLMessage(ACLMessage.REQUEST);
+       aclmessage.setContent(message);
+       aclmessage.addReceiver(new AID("rma",AID.ISLOCALNAME));
+       send(aclmessage);
+            }
+    }
 
 }
