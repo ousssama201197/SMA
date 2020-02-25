@@ -1,5 +1,6 @@
 package Rootag;
 
+import Entities.Document;
 import Entities.Utilisateur;
 import Utilisateur.UtilisateurContainer;
 import interfaceGraphique.inscription;
@@ -12,13 +13,19 @@ import jade.gui.GuiEvent;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.ControllerException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RootContainer implements Runnable {
 
+    
+    
+    Root agent;
     inscription fenetre;
     ArrayList<Utilisateur> users;
     ArrayList<String> centreInt;
+    ArrayList<Document> documents;
+    
 
     public RootContainer() {
     }
@@ -44,6 +51,7 @@ public class RootContainer implements Runnable {
 
             fenetre = new inscription(this, centreInt);
             users = new ArrayList<Utilisateur>();
+            documents = new ArrayList<Document>();
 
         } catch (ControllerException e) {
             // TODO Auto-generated catch block
@@ -51,9 +59,65 @@ public class RootContainer implements Runnable {
         }
     }
     
-    public void autentifier(Utilisateur user) {
-         users.add(user);
-         new Thread((Runnable) new UtilisateurContainer(user.getNom())).start();
+      public void AjouteDocuments(String path,String userName) {
+          Utilisateur user=null;
+                      System.err.println("UsersSize :"+users.size() +" "+users.get(0).getCentreInt()+ " "+ userName);
+
+            for(int i=0;i<users.size();i++){
+            if(users.get(i).getNom().equals(userName)) {
+                user=users.get(i);
+            }
+        }
+          Document doc = new Document(path,user.getCentreInt());
+          documents.add(doc);       
     }
+      
+      
+    
+    public void autentifier(Utilisateur user) {
+        boolean Existe=false;
+        for(int i=0;i<users.size();i++){
+            if(users.get(i).getNom().equals(user.getNom())) Existe = true;
+        }
+         if(Existe == false){
+         users.add(user);
+         new Thread((Runnable) new UtilisateurContainer(user)).start();
+         }
+    }
+
+    
+    
+    public Root getAgent() {
+        return agent;
+    }
+
+    public void setAgent(Root agent) {
+        this.agent = agent;
+    }
+
+    public ArrayList<Document>  getDocument(String nom) {
+         ArrayList<Document> docs = new ArrayList<Document>();
+         String CentreInt="";       
+         System.err.println(nom+" "+users.size());
+         for(int i=0;i<users.size();i++){
+            if(users.get(i).getNom().equals(nom)) {
+            CentreInt = users.get(i).getCentreInt();
+            }
+        }
+          System.err.println("Document size"+documents.size()+"centre"+documents.get(0).getCentreInt());
+         if(!CentreInt.equals("")){
+          for(int i=0;i<documents.size();i++){
+            if(documents.get(i).getCentreInt().equals(CentreInt)) {
+                  docs.add(documents.get(i));
+            }
+        }
+    }
+         return docs;
+      
+    }
+    
+    
+    
+    
 
 }

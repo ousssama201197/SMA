@@ -184,6 +184,7 @@ public class inscription extends javax.swing.JFrame {
         
         this.setVisible(true);
         btnlogin.addActionListener((ae) -> {
+            System.out.println("fffffffffffffffffffffffffffffffffffffffffffffffff"+jComboBox1.getSelectedItem().toString());
             Utilisateur user = new Utilisateur(jTextField1.getText(), jTextField2.getText(), jComboBox1.getSelectedItem().toString());
             AgentRoot.autentifier(user);
         });

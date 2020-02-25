@@ -11,31 +11,23 @@ import java.io.Serializable;
  *
  * @author oussama_arch
  */
-public class Utilisateur implements Serializable{
-    public String Nom;
-    public String Prenom;
+public class Document implements Serializable{
+    
+    
+    public String path;
     public String centreInt;
 
-    public Utilisateur(String Nom, String Prenom, String centreInt) {
-        this.Nom = Nom;
-        this.Prenom = Prenom;
+    public Document(String path, String centreInt) {
+        this.path = path;
         this.centreInt = centreInt;
     }
 
-    public String getNom() {
-        return Nom;
+    public String getPath() {
+        return path;
     }
 
-    public void setNom(String Nom) {
-        this.Nom = Nom;
-    }
-
-    public String getPrenom() {
-        return Prenom;
-    }
-
-    public void setPrenom(String Prenom) {
-        this.Prenom = Prenom;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getCentreInt() {
