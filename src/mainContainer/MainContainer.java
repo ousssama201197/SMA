@@ -28,18 +28,10 @@ public class MainContainer {
         } catch (ControllerException ex) {
                    System.err.println("erreur");
         }
-            
-            int i=1;
+            // demmarer l'agent principale Root 
             new Thread((Runnable) new RootContainer()).start();
-            i=3;
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(MainContainer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            new Thread((Runnable) new UtilisateurContainer(i)).start();
 
-   
+ 
 
     }
 

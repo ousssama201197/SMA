@@ -1,5 +1,6 @@
 package Utilisateur;
 
+import interfaceGraphique.fenetre;
 import jade.util.leap.Properties;
 import jade.util.ExtendedProperties;
 import jade.core.ProfileImpl;
@@ -9,16 +10,15 @@ import jade.gui.GuiEvent;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.ControllerException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class UtilisateurContainer  implements Runnable{
 
     private UtilisateurAgent Agent;
-    int IdAgent;
-
-    public UtilisateurContainer(int ID) {
-        this.IdAgent = ID;
+    String AgentName;
+    fenetre fenetre;
+    public UtilisateurContainer(String nom) {
+        this.AgentName = nom;
     }
 
     @Override
@@ -30,11 +30,10 @@ public class UtilisateurContainer  implements Runnable{
             Profile profile = new ProfileImpl(p);
             AgentContainer container = rt.createAgentContainer(profile);
             AgentController Agent = null;
-            Agent = container.createNewAgent("utilisateur" + IdAgent, "Utilisateur.UtilisateurAgent", new  Object[]{this});
+            Agent = container.createNewAgent(AgentName, "Utilisateur.UtilisateurAgent", new  Object[]{this});
             Agent.start();
             container.start();
-
-            envoyerALagent();
+           fenetre =  new fenetre(this);
         } catch (ControllerException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -42,11 +41,13 @@ public class UtilisateurContainer  implements Runnable{
 
     }
    
+
     public void envoyerALagent(){
         String message = "1ereM";
         GuiEvent event = new GuiEvent(this,1);
         event.addParameter(message);
         Agent.onGuiEvent(event);
+        event =null;
     }
     
     
@@ -58,12 +59,13 @@ public class UtilisateurContainer  implements Runnable{
         this.Agent = agent;
     }
 
-    void message(GuiEvent g) {
-        System.err.println("message");
-       GuiEvent event = new GuiEvent(this,2);
 
-        Agent.onGuiEvent(event);
+    void reponse(GuiEvent event) {
+      fenetre.affichermessage(event.getParameter(0).toString());
+
     }
+
+
     
 
 }

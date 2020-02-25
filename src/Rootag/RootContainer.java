@@ -53,7 +53,7 @@ public class RootContainer implements Runnable {
     
     public void autentifier(Utilisateur user) {
          users.add(user);
-         new Thread((Runnable) new UtilisateurContainer(4)).start();
+         new Thread((Runnable) new UtilisateurContainer(user.getNom())).start();
     }
 
 }
