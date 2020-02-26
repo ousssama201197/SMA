@@ -14,9 +14,11 @@ import java.io.Serializable;
 public class Utilisateur implements Serializable{
     public String Nom;
     public String Prenom;
+    public String Motdepasse;
     public String centreInt;
 
-    public Utilisateur(String Nom, String Prenom, String centreInt) {
+    public Utilisateur(String Nom, String Prenom, String centreInt,String motdepasse) {
+        this.Motdepasse=motdepasse;
         this.Nom = Nom;
         this.Prenom = Prenom;
         this.centreInt = centreInt;

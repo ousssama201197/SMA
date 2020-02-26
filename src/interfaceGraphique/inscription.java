@@ -8,6 +8,7 @@ package interfaceGraphique;
 import Entities.Utilisateur;
 import Rootag.RootContainer;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,7 +31,6 @@ public class inscription extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jTextField10 = new javax.swing.JTextField();
         jTextField11 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
         jComboBox4 = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -38,6 +38,7 @@ public class inscription extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         btnlogin = new javax.swing.JButton();
         btnannuler2 = new javax.swing.JButton();
+        jPasswordField1 = new javax.swing.JPasswordField();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
 
@@ -45,16 +46,11 @@ public class inscription extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField10.setText("jTextField1");
         jTextField10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField10ActionPerformed(evt);
             }
         });
-
-        jTextField11.setText("jTextField2");
-
-        jTextField12.setText("jTextField2");
 
         jComboBox4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,11 +110,12 @@ public class inscription extends javax.swing.JFrame {
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField11, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                            .addComponent(jTextField10, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jComboBox4, javax.swing.GroupLayout.Alignment.LEADING, 0, 228, Short.MAX_VALUE)))
                         .addGap(150, 150, 150))))
         );
         jPanel4Layout.setVerticalGroup(
@@ -132,11 +129,11 @@ public class inscription extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16))
-                .addGap(34, 34, 34)
+                .addGap(35, 35, 35)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
@@ -205,6 +202,8 @@ public class inscription extends javax.swing.JFrame {
     }//GEN-LAST:event_btnloginActionPerformed
 
     private void btnannuler2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnannuler2ActionPerformed
+
+      System.exit(0);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnannuler2ActionPerformed
 
@@ -223,9 +222,9 @@ public class inscription extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
     // End of variables declaration//GEN-END:variables
 
     public inscription(RootContainer AgentRoot, ArrayList<String> centreInt) {
@@ -234,13 +233,20 @@ public class inscription extends javax.swing.JFrame {
         for (int i = 0; i < centreInt.size(); i++) {
             jComboBox4.addItem(centreInt.get(i));
         }
-        
-        this.setVisible(true);
-        btnlogin.addActionListener((ae) -> {
-            Utilisateur user = new Utilisateur(jTextField10.getText(), jTextField11.getText(), jComboBox4.getSelectedItem().toString());
-            AgentRoot.autentifier(user);
-        });
 
+        this.setVisible(true);
+        
+        btnlogin.addActionListener((ae) -> {
+            if (!jTextField10.getText().equals("") && !jTextField11.getText().equals("") && jComboBox4 != null && !jPasswordField1.getText().equals("") ) {
+                Utilisateur user = new Utilisateur(jTextField10.getText(), jTextField11.getText(), jComboBox4.getSelectedItem().toString(), jPasswordField1.getText());
+                AgentRoot.autentifier(user);
+            } else {
+                JOptionPane.showMessageDialog(this, "Erreur!", null, 0);
+                
+
+            }
+        });
     }
+
 
 }
