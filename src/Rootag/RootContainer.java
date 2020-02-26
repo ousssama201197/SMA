@@ -16,14 +16,11 @@ import java.util.ArrayList;
 
 public class RootContainer implements Runnable {
 
-    
-    
     Root agent;
     inscription fenetre;
     ArrayList<Utilisateur> users;
     ArrayList<String> centreInt;
     ArrayList<Document> documents;
-    
 
     public RootContainer() {
     }
@@ -54,31 +51,33 @@ public class RootContainer implements Runnable {
             e.printStackTrace();
         }
     }
-    
-      public void AjouteDocuments(String path,String userName) {
-          Utilisateur user=null;
-                      System.err.println("UsersSize :"+users.size() +" "+users.get(0).getCentreInt()+ " "+ userName);
 
-            for(int i=0;i<users.size();i++){
-            if(users.get(i).getNom().equals(userName)) {
-                user=users.get(i);
+    public void AjouteDocuments(String path, String userName) {
+        Utilisateur user = null;
+        System.err.println("UsersSize :" + users.size() + " " + users.get(0).getCentreInt() + " " + userName);
+
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getNom().equals(userName)) {
+                user = users.get(i);
             }
         }
-          Document doc = new Document(path,user.getCentreInt());
-          documents.add(doc);       
+        Document doc = new Document(path, user.getCentreInt(),user);
+        documents.add(doc);
     }
-    
+
     public void autentifier(Utilisateur user) {
-        boolean Existe=false;
-        for(int i=0;i<users.size();i++){
-            if(users.get(i).getNom().equals(user.getNom())) Existe = true;
+        boolean Existe = false;
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getNom().equals(user.getNom())) {
+                Existe = true;
+            }
         }
-         if(Existe == false){
-         users.add(user);
-         new Thread((Runnable) new UtilisateurContainer(user)).start();
-         }
-    }   
-    
+        if (Existe == false) {
+            users.add(user);
+            new Thread((Runnable) new UtilisateurContainer(user)).start();
+        }
+    }
+
     public Root getAgent() {
         return agent;
     }
@@ -87,31 +86,50 @@ public class RootContainer implements Runnable {
         this.agent = agent;
     }
 
-    public ArrayList<Document>  getDocument(String nom) {
-         ArrayList<Document> docs = new ArrayList<Document>();
-         if(documents.size() > 0){
-         String CentreInt="";       
-         System.err.println(nom+" "+users.size());
-         for(int i=0;i<users.size();i++){
-            if(users.get(i).getNom().equals(nom)) {
-            CentreInt = users.get(i).getCentreInt();
+    public ArrayList<Document> getDocument(String nom) {
+        ArrayList<Document> docs = new ArrayList<Document>();
+        if (documents.size() > 0) {
+            String CentreInt = "";
+            System.err.println(nom + " " + users.size());
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).getNom().equals(nom)) {
+                    CentreInt = users.get(i).getCentreInt();
+                }
             }
-        }
-         if(!CentreInt.equals("")){
-          for(int i=0;i<documents.size();i++){
-            if(documents.get(i).getCentreInt().equals(CentreInt)) {
-                  docs.add(documents.get(i));
-            }
-        }
-          
-    }
-         }
-         return docs;
-      
-    }
-    
-    
-    
-    
+            if (!CentreInt.equals("")) {
+                for (int i = 0; i < documents.size(); i++) {
+                    if (documents.get(i).getCentreInt().equals(CentreInt)) {
+                        docs.add(documents.get(i));
+                    }
+                }
 
+            }
+        }
+        return docs;
+
+    }
+
+    ArrayList<Utilisateur> getContacts(String centreInt) {
+      ArrayList<Utilisateur> usersContact = new ArrayList<Utilisateur>();
+        if (users.size() > 0) {
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).getCentreInt().equals(centreInt)) {
+                    usersContact.add(users.get(i));
+                }
+            }
+        }
+        return usersContact;
+    }
+
+    void setevaluation(String path , String note) {
+        if (documents.size() > 0) {
+
+            for (int i = 0; i < documents.size(); i++) {
+                if (documents.get(i).getPath().equals(path)) {
+                    documents.get(i).setNote(documents.get(i).getNote() + (int) Integer.parseInt(note));
+                    break;
+      
+            }
+    }
+        }}
 }

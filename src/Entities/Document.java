@@ -16,10 +16,29 @@ public class Document implements Serializable{
     
     public String path;
     public String centreInt;
+    public Utilisateur user;
+    public int note;
 
-    public Document(String path, String centreInt) {
+    public Document(String path, String centreInt,Utilisateur user) {
         this.path = path;
         this.centreInt = centreInt;
+        this.user = user;
+    }
+
+    public Utilisateur getUser() {
+        return user;
+    }
+
+    public void setUser(Utilisateur user) {
+        this.user = user;
+    }
+
+    public int getNote() {
+        return note;
+    }
+
+    public void setNote(int note) {
+        this.note = note;
     }
 
     public String getPath() {

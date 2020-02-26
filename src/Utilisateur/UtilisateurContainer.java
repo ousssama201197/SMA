@@ -14,12 +14,12 @@ import jade.wrapper.ControllerException;
 import java.io.File;
 import java.io.Serializable;
 
-
-public class UtilisateurContainer  implements Runnable{
+public class UtilisateurContainer implements Runnable {
 
     private UtilisateurAgent Agent;
     Utilisateur utilisateur;
     fenetre fenetre;
+
     public UtilisateurContainer(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
     }
@@ -33,51 +33,60 @@ public class UtilisateurContainer  implements Runnable{
             Profile profile = new ProfileImpl(p);
             AgentContainer container = rt.createAgentContainer(profile);
             AgentController Agent = null;
-            Agent = container.createNewAgent(utilisateur.getNom(), "Utilisateur.UtilisateurAgent", new  Object[]{this});
+            Agent = container.createNewAgent(utilisateur.getNom(), "Utilisateur.UtilisateurAgent", new Object[]{this});
             Agent.start();
             container.start();
-            
-           fenetre =  new fenetre(this);
+
+            fenetre = new fenetre(this);
         } catch (ControllerException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
     }
-   
-    public void DemanderDocument(){
-          System.out.println(utilisateur.getNom());
-          Agent.DemanderDoc("DemDoc", utilisateur.getNom());
-        
+
+    public void DemanderDocument() {
+        System.out.println(utilisateur.getNom());
+        Agent.DemanderDoc("DemDoc", utilisateur.getNom());
+
     }
 
-    public void EnvoyerDocument(File fichier){
+    public void EnvoyerDocument(File fichier) {
         Agent.EnvoiFichier(fichier.getPath());
     }
-    
-    
-    
-    
+
     public UtilisateurAgent getAgent() {
         return Agent;
     }
- 
+
     public void setAgent(UtilisateurAgent agent) {
         this.Agent = agent;
     }
 
-
     void reponse(GuiEvent event) {
-        if(event.getType() == 1)
-      fenetre.messageDocumentAjouter();
+        if (event.getType() == 1) {
+            fenetre.messageDocumentAjouter();
+        }
     }
 
     void AfficherDocument(Serializable contentObject) {
-      fenetre.AfficherListDocuments(contentObject);
+        fenetre.AfficherListDocuments(contentObject);
 
     }
 
+    public void DemanderContact() {
+        Agent.DemanderContacts(utilisateur);
+    }
 
-    
+    void AfficherContact(Serializable contentObject) {
+        fenetre.AfficherListContact(contentObject);
+
+    }
+
+    public void evaluation(String path, String note) {
+        Agent.evaluation(path,note);
+
+
+    }
 
 }
