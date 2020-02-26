@@ -1,16 +1,10 @@
 package Rootag;
 
 import Entities.Document;
-import Utilisateur.UtilisateurContainer;
-import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.ParallelBehaviour;
-import jade.gui.GuiAgent;
-import jade.gui.GuiEvent;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;

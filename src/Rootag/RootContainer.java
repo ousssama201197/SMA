@@ -9,11 +9,9 @@ import jade.util.ExtendedProperties;
 import jade.core.ProfileImpl;
 import jade.core.Profile;
 import jade.core.Runtime;
-import jade.gui.GuiEvent;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.ControllerException;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RootContainer implements Runnable {
@@ -33,7 +31,6 @@ public class RootContainer implements Runnable {
     @Override
     public void run() {
         try {
-
             Runtime rt = Runtime.instance();
             Properties p = new ExtendedProperties();
             p.setProperty(Profile.MAIN_HOST, "localhost");
@@ -48,7 +45,6 @@ public class RootContainer implements Runnable {
             centreInt = new ArrayList<String>();
             centreInt.add("informatique");
             centreInt.add("Sport");
-
             fenetre = new inscription(this, centreInt);
             users = new ArrayList<Utilisateur>();
             documents = new ArrayList<Document>();
@@ -71,8 +67,6 @@ public class RootContainer implements Runnable {
           Document doc = new Document(path,user.getCentreInt());
           documents.add(doc);       
     }
-      
-      
     
     public void autentifier(Utilisateur user) {
         boolean Existe=false;
@@ -83,9 +77,7 @@ public class RootContainer implements Runnable {
          users.add(user);
          new Thread((Runnable) new UtilisateurContainer(user)).start();
          }
-    }
-
-    
+    }   
     
     public Root getAgent() {
         return agent;
@@ -97,6 +89,7 @@ public class RootContainer implements Runnable {
 
     public ArrayList<Document>  getDocument(String nom) {
          ArrayList<Document> docs = new ArrayList<Document>();
+         if(documents.size() > 0){
          String CentreInt="";       
          System.err.println(nom+" "+users.size());
          for(int i=0;i<users.size();i++){
@@ -104,14 +97,15 @@ public class RootContainer implements Runnable {
             CentreInt = users.get(i).getCentreInt();
             }
         }
-          System.err.println("Document size"+documents.size()+"centre"+documents.get(0).getCentreInt());
          if(!CentreInt.equals("")){
           for(int i=0;i<documents.size();i++){
             if(documents.get(i).getCentreInt().equals(CentreInt)) {
                   docs.add(documents.get(i));
             }
         }
+          
     }
+         }
          return docs;
       
     }

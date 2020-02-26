@@ -1,16 +1,12 @@
 package Utilisateur;
 
 import Entities.Document;
-import Entities.Utilisateur;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.gui.GuiAgent;
 import jade.gui.GuiEvent;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
-import jade.util.leap.Properties;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
